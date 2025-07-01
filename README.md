@@ -137,6 +137,7 @@ Pour permettre les `push` en HTTP, ajoute cette configuration sur **chaque clien
 Puis redémarre le démon Docker :
 
 ```bash
+sudo systemctl daemon-reexec
 sudo systemctl restart docker
 ```
 
