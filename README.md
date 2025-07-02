@@ -47,9 +47,9 @@ docker compose up -d
 
 Les services suivants seront lancés :
 
-- `registry` → http://local-registry.master01.devops.lab
-- `registry-ui` → http://registry-ui.master01.devops.lab
-- `traefik` dashboard → http://traefik.master01.devops.lab ou http://<IP>:8080/dashboard/
+- `registry` → http://local-registry.master01.devops.lab:8880
+- `registry-ui` → http://registry-ui.master01.devops.lab:8880
+- `traefik` dashboard → http://traefik.master01.devops.lab ou http://<IP>:8881/dashboard/
 
 ---
 
@@ -115,12 +115,12 @@ docker-compose up -d
 
 ## 🔍 Accès aux interfaces
 
-| Service           | URL                                         |
-|-------------------|---------------------------------------------|
-| Docker Registry   | http://local-registry.master01.devops.lab   |
-| Registry UI       | http://registry-ui.master01.devops.lab      |
-| Traefik Dashboard | http://traefik.master01.devops.lab          |
-| Accès direct      | http://192.168.1.130:8080/dashboard/        |
+| Service           | URL                                              |
+|-------------------|--------------------------------------------------|
+| Docker Registry   | http://local-registry.master01.devops.lab:8880   |
+| Registry UI       | http://registry-ui.master01.devops.lab:8880      |
+| Traefik Dashboard | http://traefik.master01.devops.lab:8881          |
+| Accès direct      | http://192.168.1.130:8880/dashboard/             |
 
 ---
 
@@ -132,7 +132,7 @@ sudo nano /etc/docker/daemon.json
 ```
 ```json
 {
-  "insecure-registries": ["local-registry.master01.devops.lab"]
+  "insecure-registries": ["local-registry.master01.devops.lab:8880"]
 }
 ```
 
