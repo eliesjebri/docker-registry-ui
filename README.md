@@ -126,8 +126,10 @@ docker-compose up -d
 
 ## ⚙️ Configuration Docker (clients)
 
-Pour permettre les `push` en HTTP, ajoute cette configuration sur **chaque client Docker** :
-
+Pour permettre les `push` en HTTP, ajoute cette configuration dans le fichier /etc/docker/daemon.json sur **chaque client Docker** :
+```bash
+sudo nano /etc/docker/daemon.json
+```
 ```json
 {
   "insecure-registries": ["local-registry.master01.devops.lab"]
