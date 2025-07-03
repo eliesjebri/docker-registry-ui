@@ -36,7 +36,7 @@ Ce projet met en place une **registry Docker privée** avec :
 - Entrées DNS ou `/etc/hosts` :
 
 ```txt
-192.168.1.130  local-registry.master01.devops.lab registry-ui.master01.devops.lab traefik.master01.devops.lab
+<host_IP>  local-registry.devops.lab registry-ui.devops.lab traefik.devops.lab traefik.devops.lab
 ```
 
 ### 2. Lancer l’environnement
