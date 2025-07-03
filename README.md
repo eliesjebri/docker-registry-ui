@@ -43,7 +43,7 @@ Ce projet met en place une **registry Docker privée** avec :
 
 ### 2. Lancer l’environnement
 
-## Cloner le repo & lancer la stack
+#### Cloner le repo & lancer la stack
 
 ```bash
 git clone https://github.com/eliesjebri/docker-registry-ui.git
