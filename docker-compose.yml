@@ -12,7 +12,7 @@ services:
       - regnet
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.local-registry.rule=Host(`local-registry.master01.devops.lab`)"
+      - "traefik.http.routers.local-registry.rule=Host(`local-registry.master01.devops.lab`) || Host(`local-registry`)"
       - "traefik.http.routers.local-registry.entrypoints=web"
       - "traefik.http.services.local-registry.loadbalancer.server.port=5000"
 
