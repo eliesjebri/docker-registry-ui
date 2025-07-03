@@ -7,9 +7,9 @@ Ce projet met en place une **registry Docker privée** avec :
 - 🔁 Reverse proxy [Traefik](https://doc.traefik.io/traefik/) configuré en HTTP (pas HTTPS)
 - ✅ Support complet pour `docker login`, `push`, `pull`, `delete`
 - 🌍 Routage par sous-domaines :
-  - `local-registry.master01.devops.lab` → accès à la registry
-  - `registry-ui.master01.devops.lab` → interface utilisateur web
-  - `traefik.master01.devops.lab` → dashboard Traefik
+  - `local-registry.devops.lab` → accès à la registry
+  - `registry-ui.devops.lab` → interface utilisateur web
+  - `traefik.devops.lab` → dashboard Traefik
 
 ---
 
@@ -88,7 +88,7 @@ docker tag alpine local-registry.devops.lab:8880/test-alpine
 OU
 docker tag alpine local-registry:8880/test-alpine
 # Push vers la registry
-docker push local-registry.master01.devops.lab/test-alpine
+docker push local-registry.devops.lab/test-alpine
 ```
 
 Supprimer l’image via l’interface UI, puis exécuter le garbage collect (voir ci-dessous).
@@ -122,12 +122,12 @@ docker-compose up -d
 
 ## 🔍 Accès aux interfaces
 
-| Service           | URL                                              |
-|-------------------|--------------------------------------------------|
-| Docker Registry   | http://local-registry.master01.devops.lab:8880   |
-| Registry UI       | http://registry-ui.master01.devops.lab:8880      |
-| Traefik Dashboard | http://traefik.master01.devops.lab:8880          |
-| Accès direct      | http://192.168.1.130:8880/dashboard/             |
+| Service           | URL                                     |
+|-------------------|-----------------------------------------|
+| Docker Registry   | http://local-registry.devops.lab:8880   |
+| Registry UI       | http://registry-ui.devops.lab:8880      |
+| Traefik Dashboard | http://traefik.devops.lab:8880          |
+| Accès direct      | http://192.168.1.130:8880/dashboard/    |
 
 ---
 
@@ -139,7 +139,7 @@ sudo nano /etc/docker/daemon.json
 ```
 ```json
 {
-  "insecure-registries": ["local-registry.master01.devops.lab:8880",
+  "insecure-registries": ["local-registry.devops.lab:8880",
                           "local-registry:8880"
 ]
 }
