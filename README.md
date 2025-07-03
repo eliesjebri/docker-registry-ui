@@ -32,6 +32,7 @@ Ce projet met en place une **registry Docker privée** avec :
 ### 1. Prérequis
 
 - Docker + Docker Compose installés
+- Git installé
 - Un user (jenkins) avec des droits sudo et membre du groupe `docker`
 - Fichier `htpasswd` valide dans `./config/htpasswd`
 - Entrées DNS ou `/etc/hosts` :
@@ -42,7 +43,11 @@ Ce projet met en place une **registry Docker privée** avec :
 
 ### 2. Lancer l’environnement
 
+## Cloner le repo & lancer la stack
+
 ```bash
+git clone https://github.com/eliesjebri/docker-registry-ui.git
+cd docker-registry-ui/
 docker compose up -d
 ```
 
