@@ -32,6 +32,7 @@ Ce projet met en place une **registry Docker privée** avec :
 ### 1. Prérequis
 
 - Docker + Docker Compose installés
+- Un user (jenkins) avec des droits sudo et membre du groupe `docker`
 - Fichier `htpasswd` valide dans `./config/htpasswd`
 - Entrées DNS ou `/etc/hosts` :
 
