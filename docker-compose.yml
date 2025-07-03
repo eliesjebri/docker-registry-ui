@@ -9,17 +9,17 @@ services:
       - ./config/config.yml:/etc/docker/registry/config.yml
       - ./config/htpasswd:/etc/docker/registry/htpasswd
     networks:
-      - regnet
+      - registry-net
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.local-registry.rule=Host(`local-registry.master01.devops.lab`) || Host(`local-registry`)"
+      - "traefik.http.routers.local-registry.rule=Host(`local-registry.devops.lab`) || Host(`local-registry`)"
       - "traefik.http.routers.local-registry.entrypoints=web"
       - "traefik.http.services.local-registry.loadbalancer.server.port=5000"
 
       # Middleware CORS pour UI
       - "traefik.http.middlewares.registry-cors.headers.accesscontrolallowmethods=GET,PUT,POST,DELETE,OPTIONS"
       - "traefik.http.middlewares.registry-cors.headers.accesscontrolallowheaders=Authorization,Content-Type,Accept"
-      - "traefik.http.middlewares.registry-cors.headers.accesscontrolalloworiginlist=http://registry-ui.master01.devops.lab"
+      - "traefik.http.middlewares.registry-cors.headers.accesscontrolalloworiginlist=http://registry-ui.devops.lab"
       - "traefik.http.middlewares.registry-cors.headers.accesscontrolallowcredentials=true"
       - "traefik.http.middlewares.registry-cors.headers.addvaryheader=true"
       - "traefik.http.routers.local-registry.middlewares=registry-cors@docker"
@@ -33,10 +33,10 @@ services:
       - DELETE_IMAGES=true
       - SINGLE_REGISTRY=true
     networks:
-      - regnet
+      - registry-net
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.registry-ui.rule=Host(`registry-ui.master01.devops.lab`)"
+      - "traefik.http.routers.registry-ui.rule=Host(`registry-ui.devops.lab`)"
       - "traefik.http.routers.registry-ui.entrypoints=web"
       - "traefik.http.services.registry-ui.loadbalancer.server.port=80"
 
@@ -55,14 +55,14 @@ services:
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
     networks:
-      - regnet
+      - registry-net
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.traefik.rule=Host(`traefik.master01.devops.lab`)"
+      - "traefik.http.routers.traefik.rule=Host(`traefik.devops.lab`)"
       - "traefik.http.routers.traefik.entrypoints=web"
       - "traefik.http.services.traefik.loadbalancer.server.port=8080"
 
 networks:
-  regnet:
-    name: regnet
+  registry-net:
+    name: registry-net
 
