@@ -47,9 +47,9 @@ docker compose up -d
 
 Les services suivants seront lancés :
 
-- `registry` → http://local-registry.master01.devops.lab:8880
-- `registry-ui` → http://registry-ui.master01.devops.lab:8880
-- `traefik` dashboard → http://traefik.master01.devops.lab ou http://<IP>:8881/dashboard/
+- `registry` → http://local-registry.devops.lab:8880 (API)
+- `registry-ui` → http://registry-ui.devops.lab:8880
+- `traefik` dashboard → http://traefik.devops.lab:8880 ou http://<IP>:8881/dashboard/
 
 ---
 
@@ -66,7 +66,7 @@ Remplace `jenkins` et `password` avec tes propres identifiants.
 Connexion à la registry :
 
 ```bash
-docker login local-registry.master01.devops.lab
+docker login local-registry.devops.lab:8880
 ```
 
 ---
@@ -78,8 +78,9 @@ docker login local-registry.master01.devops.lab
 docker pull alpine
 
 # Tag vers la registry privée
-docker tag alpine local-registry.master01.devops.lab/test-alpine
-
+docker tag alpine local-registry.devops.lab:8880/test-alpine
+OU
+docker tag alpine local-registry:8880/test-alpine
 # Push vers la registry
 docker push local-registry.master01.devops.lab/test-alpine
 ```
@@ -119,7 +120,7 @@ docker-compose up -d
 |-------------------|--------------------------------------------------|
 | Docker Registry   | http://local-registry.master01.devops.lab:8880   |
 | Registry UI       | http://registry-ui.master01.devops.lab:8880      |
-| Traefik Dashboard | http://traefik.master01.devops.lab:8881          |
+| Traefik Dashboard | http://traefik.master01.devops.lab:8880          |
 | Accès direct      | http://192.168.1.130:8880/dashboard/             |
 
 ---
@@ -132,7 +133,9 @@ sudo nano /etc/docker/daemon.json
 ```
 ```json
 {
-  "insecure-registries": ["local-registry.master01.devops.lab:8880"]
+  "insecure-registries": ["local-registry.master01.devops.lab:8880",
+                          "local-registry:8880"
+]
 }
 ```
 
