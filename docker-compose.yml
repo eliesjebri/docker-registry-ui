@@ -1,68 +1,23 @@
-version: '3.8'
-
 services:
   registry:
-    image: registry:2.7
+    image: registry:2.8
     container_name: registry
+    ports:
+      - 5000:5000
     volumes:
       - ./registry-data:/var/lib/registry
-      - ./config/config.yml:/etc/docker/registry/config.yml
-      - ./config/htpasswd:/etc/docker/registry/htpasswd
-    networks:
-      - regnet
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.local-registry.rule=Host(`local-registry.master01.devops.lab`)"
-      - "traefik.http.routers.local-registry.entrypoints=web"
-      - "traefik.http.services.local-registry.loadbalancer.server.port=5000"
-
-      # Middleware CORS pour UI
-      - "traefik.http.middlewares.registry-cors.headers.accesscontrolallowmethods=GET,PUT,POST,DELETE,OPTIONS"
-      - "traefik.http.middlewares.registry-cors.headers.accesscontrolallowheaders=Authorization,Content-Type,Accept"
-      - "traefik.http.middlewares.registry-cors.headers.accesscontrolalloworiginlist=http://registry-ui.master01.devops.lab"
-      - "traefik.http.middlewares.registry-cors.headers.accesscontrolallowcredentials=true"
-      - "traefik.http.middlewares.registry-cors.headers.addvaryheader=true"
-      - "traefik.http.routers.local-registry.middlewares=registry-cors@docker"
+      - ./registry-config/config.yml:/etc/docker/registry/config.yml
 
   registry-ui:
     image: joxit/docker-registry-ui:latest
     container_name: registry-ui
+    ports:
+      - 8880:80
     environment:
       - REGISTRY_TITLE=My Private Docker Registry
-      - NGINX_PROXY_PASS_URL=http://registry:5000
+      - REGISTRY_URL=http://registry.devops.lab:5000
       - DELETE_IMAGES=true
       - SINGLE_REGISTRY=true
-    networks:
-      - regnet
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.registry-ui.rule=Host(`registry-ui.master01.devops.lab`)"
-      - "traefik.http.routers.registry-ui.entrypoints=web"
-      - "traefik.http.services.registry-ui.loadbalancer.server.port=80"
-
-  traefik:
-    image: traefik:v2.11
-    container_name: traefik
-    command:
-      - "--entrypoints.web.address=:80"
-      - "--providers.docker=true"
-      - "--providers.docker.exposedbydefault=false"
-      - "--api.dashboard=true"
-      - "--api.insecure=true"
-    ports:
-      - "80:80"
-      - "8080:8080" # Traefik dashboard
-    volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock:ro"
-    networks:
-      - regnet
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.traefik.rule=Host(`traefik.master01.devops.lab`)"
-      - "traefik.http.routers.traefik.entrypoints=web"
-      - "traefik.http.services.traefik.loadbalancer.server.port=8080"
-
-networks:
-  regnet:
-    name: regnet
-
+      - REGISTRY_ALLOW_ORIGIN=true
+    depends_on:
+      - registry
